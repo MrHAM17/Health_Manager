@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:health_manager/login.dart';
+import 'package:health_manager/user_details.dart';
 
 class SignUpPage extends StatelessWidget {
   @override
@@ -109,9 +110,10 @@ class SignUpPage extends StatelessWidget {
                     // Handle sign up
                     // After successful sign up, navigate to UserDetailsPage
 
-
-
-
+                    Navigator.push( context, MaterialPageRoute(
+                      builder: (context) => UserDetailsPage(),
+                    ),
+                    );
 
                   },
                   style: ElevatedButton.styleFrom(
