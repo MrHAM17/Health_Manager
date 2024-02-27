@@ -31,7 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   carousel_slider: ^4.0.0
-  flutter_local_notifications: ^6.0.0
+#  flutter_local_notifications: ^6.0.0
   timezone: ^0.7.0
 
 

@@ -4,7 +4,6 @@ import 'package:health_manager/home.dart';
 import 'package:health_manager/login.dart';
 import 'package:health_manager/signup.dart';
 import 'firebase_options.dart';
-import 'medicine.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

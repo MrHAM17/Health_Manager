@@ -1,162 +1,188 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'medicine.dart';
-//
-// class HomePage extends StatefulWidget {
-//   const HomePage({Key? key}) : super(key: key);
-//
-//   @override
-//   _HomePageState createState() => _HomePageState();
-// }
-//
-// class _HomePageState extends State<HomePage> {
-//   int _selectedIndex = 1; // Index of the currently selected tab
-//
-//   // Define the pages for each tab
-//   final List<Widget> _pages = [
-//     // Add your MedicationPage widget here
-//     Placeholder(),
-//     // Add your HomePage widget here
-//     Placeholder(),
-//     // Add your ProfilePage widget here
-//     Placeholder(),
-//   ];
-//
-//   // Handle bottom navigation bar item selection
-//   void _onItemTapped(int index) {
-//     setState(() {
-//       _selectedIndex = index;
-//     });
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(
-//           'Health Manager',
-//           style: TextStyle(
-//             fontWeight: FontWeight.bold,
-//             fontSize: 20.0,
-//           ),
-//         ),
-//         centerTitle: true, // Align title in the center
-//         backgroundColor: Colors.lightBlue,
-//         elevation: 0, // Remove the app bar shadow
-//       ),
-//       body: AnimatedSwitcher(
-//         duration: Duration(milliseconds: 300),
-//         child: _pages[_selectedIndex], // Show the selected page
-//       ),
-//       bottomNavigationBar: BottomNavigationBar(
-//         backgroundColor: Colors.lightBlue,
-//         selectedItemColor: Colors.white,
-//         unselectedItemColor: Colors.white.withOpacity(0.5),
-//         currentIndex: _selectedIndex,
-//         onTap: _onItemTapped,
-//         // Customize bottom navigation bar items
-//         items: [
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.medication_rounded, size: 28),
-//             label: 'Medication',
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.home_rounded, size: 28),
-//             label: 'Home',
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.person_rounded, size: 28),
-//             label: 'Profile',
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
+import 'medicine_info.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 1; // Index of the currently selected tab
-
-  // Define the pages for each tab
-  final List<Widget> _pages = [
-    // Add your MedicationPage widget here
-    MedicinePage(),
-    // Add your HomePage widget here
-    Placeholder(),
-    // Add your ProfilePage widget here
-    // ProfilePage(),
-  ];
-
-  // Handle bottom navigation bar item selection
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-
-    // Navigate to the selected page
-    switch (index) {
-      case 0:
-        Navigator.of(context).push(MaterialPageRoute(builder: (_) => MedicinePage()));
-        break;
-      case 1:
-      // Home page is already selected, no need to navigate
-        break;
-      // case 2:
-      //   Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProfilePage()));
-      //   break;
-      default:
-        break;
-    }
+  int selectedPageIndex = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Health Manager',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20.0,
+    return MaterialApp(
+      title: 'Buttom Navigation Bar',
+      home: Scaffold(
+        appBar: AppBar(title: Text('HEALTH APP'),),
+        body: [
+          Center(
+            child: Text(
+              'Home ',
+            ),
           ),
+          MedicineInformation(),
+          Container(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                const Text('USER NAME', style: TextStyle(fontSize: 22)),
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        begin: Alignment.bottomRight,
+                        end: Alignment.topLeft,
+                        colors: [Colors.lightBlue, Colors.white],
+                      ),
+                      borderRadius: BorderRadius.circular(25)),
+                  height: 120,
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                  child: const Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(children: [
+                        Icon(
+                          CupertinoIcons.heart_fill,
+                        ),
+                        Text(
+                          'Height',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        Text(
+                          '120 cm',
+                          style: TextStyle(fontSize: 22),
+                        ),
+                      ]),
+                      VerticalDivider(
+                        thickness: 2,
+                      ),
+                      Column(children: [
+                        Icon(Icons.weekend_outlined),
+                        Text(
+                          'Weight',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        Text(
+                          '100 kg',
+                          style: TextStyle(fontSize: 22),
+                        ),
+                      ]),
+                    ],
+                  ),
+                ),
+                Expanded(
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        padding: EdgeInsets.only(top: 30, left: 10, right: 10),
+                        height: MediaQuery.of(context).size.height * 0.56,
+                        decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [Colors.lightBlue, Colors.white],
+                            ),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(50),
+                                topRight: Radius.circular(50))),
+                        child: Column(
+
+                          children: [
+                            Container(
+                                margin: EdgeInsets.symmetric(vertical:15),
+                                height: 60,
+                                child: ElevatedButton(
+                                    onPressed: () {},
+                                    child: Row(
+                                      children: [
+                                        Text('Edit Profile'),
+                                        Spacer(),
+                                        Icon(CupertinoIcons.arrow_right)
+                                      ],
+                                    ))),
+                            Container(
+                                margin: EdgeInsets.symmetric(vertical:15),
+                                height: 60,
+                                child: ElevatedButton(
+                                    onPressed: () {},
+                                    child: Row(
+                                      children: [
+                                        Text('Help'),
+                                        Spacer(),
+                                        Icon(CupertinoIcons.arrow_right)
+                                      ],
+                                    ))),
+                            Container(
+                                margin: EdgeInsets.symmetric(vertical:15),
+                                height: 60,
+                                child: ElevatedButton(
+                                    onPressed: () {},
+                                    child: Row(
+                                      children: [
+                                        Text('FAQ'),
+                                        Spacer(),
+                                        Icon(CupertinoIcons.arrow_right)
+                                      ],
+                                    ))),
+                            Container(
+                                margin: EdgeInsets.symmetric(vertical: 15),
+                                height: 60,
+                                child: ElevatedButton(
+                                  onPressed: () {},
+                                  child: Row(
+                                    children: [
+                                      Text('Sign Out'),
+                                      Spacer(),
+                                      Icon(CupertinoIcons.arrow_right)
+                                    ],
+                                  ),
+                                )),
+                          ],
+                        ),
+                      ),
+                    ))
+              ],
+            ),
+          ),
+        ][selectedPageIndex],
+        bottomNavigationBar: NavigationBar(
+          selectedIndex: selectedPageIndex,
+          onDestinationSelected: (int index) {
+            setState(() {
+              selectedPageIndex = index;
+            });
+          },
+          destinations: const <NavigationDestination>[
+            NavigationDestination(
+              selectedIcon: Icon(Icons.home),
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            NavigationDestination(
+              selectedIcon: Icon(Icons.medical_information),
+              icon: Icon(Icons.medical_information),
+              label: 'Medication',
+            ),
+            NavigationDestination(
+              selectedIcon: Icon(Icons.person),
+              icon: Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
         ),
-        centerTitle: true, // Align title in the center
-        backgroundColor: Colors.lightBlue,
-        elevation: 0, // Remove the app bar shadow
-      ),
-      body: AnimatedSwitcher(
-        duration: Duration(milliseconds: 300),
-        child: _pages[_selectedIndex], // Show the selected page
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.lightBlue,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white.withOpacity(0.5),
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        // Customize bottom navigation bar items
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.medication_rounded, size: 28),
-            label: 'Medication',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_rounded, size: 28),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_rounded, size: 28),
-            label: 'Profile',
-          ),
-        ],
       ),
     );
   }
