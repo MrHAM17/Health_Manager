@@ -42,6 +42,8 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+final GlobalKey<ScaffoldMessengerState> snackbarKey =
+GlobalKey<ScaffoldMessengerState>();
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
