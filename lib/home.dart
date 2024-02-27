@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -141,7 +143,9 @@ class _HomePageState extends State<HomePage> {
                                 margin: EdgeInsets.symmetric(vertical: 15),
                                 height: 60,
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    FirebaseAuth.instance.signOut();
+                                  },
                                   child: Row(
                                     children: [
                                       Text('Sign Out'),

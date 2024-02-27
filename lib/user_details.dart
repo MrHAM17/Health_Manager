@@ -501,6 +501,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:health_manager/home.dart';
 import 'package:health_manager/main.dart';
 import 'package:hive/hive.dart';
 
@@ -619,7 +620,9 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                               var user = FirebaseAuth.instance.currentUser?.uid;
                               var docRef = FirebaseFirestore.instance.collection('Users').doc(user);
                               try{
-                                await docRef.update({'weight': weight.text.trim(),'height':height.text.trim(),'condition':condition});
+                                await docRef.update({'weight': weight.text.trim(),'height':height.text.trim(),'condition':condition}).then((value) {
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+                                });
                               }catch (e){
                                 // snackbarKey.currentState?.showSnackBar(SnackBar(content: Text(e.toString())));
 

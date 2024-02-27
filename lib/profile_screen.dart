@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -139,7 +140,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           margin: EdgeInsets.symmetric(vertical: 15),
                             height: 60,
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                await FirebaseAuth.instance.signOut();
+                              },
                               child: Row(
                                 children: [
                                   Text('Sign Out'),
