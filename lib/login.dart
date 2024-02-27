@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -33,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       left:35),
                   child: Column(
                     children: [
-                      TextField(
+                      TextFormField(
                         decoration: InputDecoration(
                           fillColor: Colors.grey.shade100,
                           filled: true,

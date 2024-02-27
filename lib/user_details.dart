@@ -79,15 +79,7 @@
 //   ));
 // }
 
-
-
-
 //   Way 2 ........................................................................................
-
-
-
-
-
 
 //
 // import 'package:flutter/material.dart';
@@ -204,16 +196,7 @@
 //   ));
 // }
 
-
-
-
-
-
-
 //   Way 3 ........................................................................................
-
-
-
 
 //
 // import 'package:flutter/material.dart';
@@ -356,10 +339,6 @@
 //     home: UserDetailsPage(),
 //   ));
 // }
-
-
-
-
 
 //   Way 4.1  ........................................................................................
 //
@@ -517,23 +496,14 @@
 //   }
 // }
 
-
-
 //   Way 4.2  ........................................................................................
 
-
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:health_manager/main.dart';
+import 'package:hive/hive.dart';
 
-void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    theme: ThemeData(
-      primaryColor: Colors.lightBlue, // Set primary color to light blue
-    ),
-    home: UserDetailsPage(),
-  ));
-}
 
 class UserDetailsPage extends StatefulWidget {
   @override
@@ -541,142 +511,141 @@ class UserDetailsPage extends StatefulWidget {
 }
 
 class _UserDetailsPageState extends State<UserDetailsPage> {
-  PageController _pageController = PageController(initialPage: 0);
+  final weight = TextEditingController();
+  final height = TextEditingController();
+  var condition;
+  var name;
+  final formKey = GlobalKey<FormState>();
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('User Details'),
-      // ),
-      body: PageView(
-        controller: _pageController,
-        children: [
-          UserDetailsScreen(),
-          MedicalHistoryScreen(),
-        ],
-      ),
-    );
+  void initState() {
+    var box = Hive.box('UserBox');
+    name = box.get('name');
+    super.initState();
   }
-}
 
-class UserDetailsScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              'Enter Your Details',
-              style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 20.0),
-            UserDetailsField(label: 'Weight (kg)'),
-            SizedBox(height: 20.0),
-            UserDetailsField(label: 'Height (cm)'),
-            SizedBox(height: 20.0),
-            UserDetailsField(label: 'Age'),
-            SizedBox(height: 40.0),
-            Align(
-              alignment: Alignment.centerRight,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Navigate to the next screen (Medical History)
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => MedicalHistoryScreen()));
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 15.0),
-                ),
-                child: Text('Next', style: TextStyle(fontSize: 18.0)),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class MedicalHistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Medical History'),
+        title: Text('Hello, ${name}'),
       ),
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                'Medical History',
-                style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 20.0),
-              DropdownButtonFormField<String>(
-                items: ['Diabetes', 'Hypertension', 'Asthma', 'Other']
-                    .map((history) {
-                  return DropdownMenuItem<String>(
-                    value: history,
-                    child: Text(history),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  // Handle medical history selection
-                },
-                decoration: InputDecoration(
-                  labelText: 'Select Medical History',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(height: 40.0),
-              Align(
-                alignment: Alignment.centerRight,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Handle saving user details and navigate back to the previous screen (User Details)
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Center(
+              child: Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'Enter Your Details',
+                        style: TextStyle(
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 20.0),
+                      TextFormField(
+                        validator: (value) {
+                          if(value == ''){
+                            return "Enter Weight in kg.";
+                          }
+                        },
+                        controller: weight,
+                        decoration: InputDecoration(
+                          labelText: 'Weight(kg)',
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType: TextInputType.number,
+                      ),
+                      SizedBox(height: 20.0),
+                      TextFormField(
+                        validator: (value) {
+                          if(value == ''){
+                            return "Enter Height in cm";
+                          }
+                        },
+                        controller: height,
+                        decoration: InputDecoration(
+                          labelText: 'Height(cm)',
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType: TextInputType.number,
+                      ),
+                      SizedBox(height: 20.0),
+                      Text(
+                        'Medical History',
+                        style: TextStyle(
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 20.0),
+                      DropdownButtonFormField<String>(
+                        validator: (value) {
+                          if(value == null){
+                            return "Select your medical condition";
+                          }
+                        },
+                        items: ['Diabetes', 'Hypertension', 'Asthma',]
+                            .map((history) {
+                          return DropdownMenuItem<String>(
+                            value: history,
+                            child: Text(history),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            condition = value;
+                          });
+                          // Handle medical history selection
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Select Medical History',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      SizedBox(height: 40.0),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            if(formKey.currentState!.validate()){
+                              var user = FirebaseAuth.instance.currentUser?.uid;
+                              var docRef = FirebaseFirestore.instance.collection('Users').doc(user);
+                              try{
+                                await docRef.update({'weight': weight.text.trim(),'height':height.text.trim(),'condition':condition});
+                              }catch (e){
+                                snackbarKey.currentState?.showSnackBar(SnackBar(content: Text(e.toString())));
 
-                  },
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 15.0),
+                            }
+                              setState(() {
+
+                              });
+                            }else{
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 40.0, vertical: 15.0),
+                          ),
+                          child: Text('Save Details', style: TextStyle(fontSize: 18.0)),
+                        ),
+                      ),
+                    ],
                   ),
-                  child: Text('Save Details', style: TextStyle(fontSize: 18.0)),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ),
+      )
     );
   }
 }
 
-class UserDetailsField extends StatelessWidget {
-  final String label;
-
-  UserDetailsField({required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      decoration: InputDecoration(
-        labelText: label,
-        border: OutlineInputBorder(),
-      ),
-      keyboardType: TextInputType.number,
-    );
-  }
-}
