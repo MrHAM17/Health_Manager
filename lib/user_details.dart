@@ -621,7 +621,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                               try{
                                 await docRef.update({'weight': weight.text.trim(),'height':height.text.trim(),'condition':condition});
                               }catch (e){
-                                snackbarKey.currentState?.showSnackBar(SnackBar(content: Text(e.toString())));
+                                // snackbarKey.currentState?.showSnackBar(SnackBar(content: Text(e.toString())));
 
                             }
                               setState(() {

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:health_manager/auth_methods.dart';
 import 'package:health_manager/signup.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -11,6 +12,30 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  final TextEditingController _emailcontroller = TextEditingController();
+  final TextEditingController _passwordcontroller = TextEditingController();
+  bool _isLoading = false;
+
+  void loginUser() async{
+    setState(() {
+      _isLoading =true;
+    });
+    String res =await AuthMethods().loginUser(email: _emailcontroller.text, password: _passwordcontroller.text);
+    if(res == "success"){
+      Text('login Successful');
+    }else{
+      setState(() {
+        _isLoading = false;
+      });
+
+      final snackBar  = SnackBar(content: Text('Login failed. Please check your credential.'),
+      backgroundColor: Colors.red,);
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,7 +58,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       left:35),
                   child: Column(
                     children: [
-                      TextField(
+                      TextFormField(
+                        controller: _emailcontroller,
                         decoration: InputDecoration(
                           fillColor: Colors.grey.shade100,
                           filled: true,
@@ -46,7 +72,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         height: 30,
                       ),
-                      TextField(
+                      TextFormField(
+                        controller: _passwordcontroller,
                         obscureText: true,
                         decoration: InputDecoration(
                             fillColor: Colors.grey.shade100,
@@ -58,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       Align(alignment: Alignment.centerRight,child: TextButton(onPressed: (){}, child:Text('Forgot Password?') )),
-                      ElevatedButton(onPressed: (){}, child: Text('Login'),),
+                      ElevatedButton(onPressed: loginUser, child: Text('Login'),),
                       Align(
                         alignment: Alignment.center,
                         child:Column(

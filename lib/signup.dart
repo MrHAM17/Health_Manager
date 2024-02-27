@@ -212,8 +212,8 @@ class _SignUpPageState extends State<SignUpPage> {
                           Navigator.pop(context);
                         } catch (e) {
                           print('Error: ' + e.toString());
-                          snackbarKey.currentState
-                              ?.showSnackBar(SnackBar(content: Text(e.toString())));
+                          // snackbarKey.currentState
+                          //     ?.showSnackBar(SnackBar(content: Text(e.toString())));
                           Navigator.pop(context);
                         }
                         Navigator.pop(context);
