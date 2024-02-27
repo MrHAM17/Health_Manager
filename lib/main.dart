@@ -1,18 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:health_manager/login.dart';
-import 'package:health_manager/signup.dart';
-import 'package:health_manager/user_details.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-  await Hive.openBox('UserBox');
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -47,33 +38,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
         useMaterial3: true,
       ),
-      home: StreamBuilder(stream: FirebaseAuth.instance.authStateChanges(), builder: (context,snapshot) {
-        if(snapshot.hasData){
-          return FutureBuilder(future: implementFlow(), builder: (context,snapshot) {
-            if(snapshot.data!.containsKey('condition')){
-              return MyHomePage(title: 'Home');
-            }else{
-              return UserDetailsPage();
-            }
-          });
-        }else{
-          return LoginScreen();
-        }
-      }),
-
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
-  Future<Map<String, dynamic>?> implementFlow() async {
-    var user = await FirebaseAuth.instance.currentUser;
-    var data = await FirebaseFirestore.instance.collection('Users').doc(
-        user?.uid).get();
-    var userdata = data.data();
-    return userdata;
-  }
 }
-
-final GlobalKey<ScaffoldMessengerState> snackbarKey =
-GlobalKey<ScaffoldMessengerState>();
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -94,23 +62,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-  // @override
-  // void initState() {
-  //   implementFlow();
-  //   super.initState();
-  // }
-
   int _counter = 0;
 
-  Future<void> _incrementCounter() async {
+  void _incrementCounter() {
+    setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
-      await FirebaseAuth.instance.signOut();
-
+      _counter++;
+    });
   }
 
   @override
@@ -166,15 +128,5 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
-  }
-
-  Future<void> implementFlow() async {
-    var user = await FirebaseAuth.instance.currentUser;
-    var data = await FirebaseFirestore.instance.collection('Users').doc(user?.uid).get();
-    var userdata = data.data();
-    if(userdata!.containsKey('details')){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => UserDetailsPage()));
-    }else{
-    }
   }
 }
