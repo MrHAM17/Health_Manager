@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:health_manager/auth_methods.dart';
 import 'package:health_manager/signup.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,6 +13,41 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading = false;
+
+void loginUser() async {
+  setState(() {
+    _isLoading = true;
+  });
+  String res = await AuthMethods().loginUser(
+    email: _emailController.text,
+    password:_passwordController.text,
+  );
+  if(res == "success"){
+  Text('Login Successful');
+  }else{
+    setState(() {
+      _isLoading = false;
+    });
+
+    final snackBar = SnackBar(
+      content: Text('Login failed. Please check your credentials.'),
+      backgroundColor: Colors.red,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+  // setState(() {
+  //   _isLoading = false;
+  // });
+
+}
+
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,7 +70,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       left:35),
                   child: Column(
                     children: [
-                      TextField(
+                      TextFormField(
+                        controller: _emailController,
                         decoration: InputDecoration(
                           fillColor: Colors.grey.shade100,
                           filled: true,
@@ -46,7 +84,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         height: 30,
                       ),
-                      TextField(
+                      TextFormField(
+                        controller: _passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
                             fillColor: Colors.grey.shade100,
@@ -58,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       Align(alignment: Alignment.centerRight,child: TextButton(onPressed: (){}, child:Text('Forgot Password?') )),
-                      ElevatedButton(onPressed: (){}, child: Text('Login'),),
+                      ElevatedButton(onPressed: loginUser, child: Text('Login'),),
                       Align(
                         alignment: Alignment.center,
                         child:Column(
