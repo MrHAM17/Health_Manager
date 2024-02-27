@@ -621,10 +621,16 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                               var docRef = FirebaseFirestore.instance.collection('Users').doc(user);
                               try{
                                 await docRef.update({'weight': weight.text.trim(),'height':height.text.trim(),'condition':condition}).then((value) {
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+                                  var box = Hive.box('UserBox');
+                                  box.put('weight', weight.text.trim());
+                                  box.put('height', height.text.trim());
+                                  box.put('condition', condition.text.trim());
+                                  setState(() {
+
+                                  });
                                 });
                               }catch (e){
-                                // snackbarKey.currentState?.showSnackBar(SnackBar(content: Text(e.toString())));
+                                snackbarKey.currentState?.showSnackBar(SnackBar(content: Text(e.toString())));
 
                             }
                               setState(() {

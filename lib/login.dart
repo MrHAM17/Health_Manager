@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:health_manager/auth_methods.dart';
 import 'package:health_manager/signup.dart';
+import 'package:hive/hive.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -24,6 +27,12 @@ class _LoginScreenState extends State<LoginScreen> {
     String res =await AuthMethods().loginUser(email: _emailcontroller.text, password: _passwordcontroller.text);
     if(res == "success"){
       Text('login Successful');
+      var box = Hive.box('UserBox');
+      var userdata = await getUserData();
+      box.put('name', userdata?['name']);
+      box.put('mail', userdata?['mail']);
+      box.put('weight', userdata?['weight']);
+      box.put('height', userdata?['height']);
     }else{
       setState(() {
         _isLoading = false;
@@ -117,5 +126,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
     );
 
+  }
+  Future<Map<String, dynamic>?> getUserData() async {
+    var user = await FirebaseAuth.instance.currentUser;
+    var data = await FirebaseFirestore.instance.collection('Users').doc(
+        user?.uid).get();
+    var userdata = data.data();
+    return userdata;
   }
 }

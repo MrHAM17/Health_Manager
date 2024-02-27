@@ -44,6 +44,7 @@ dependencies:
   firebase_auth: any
   hive: any
   hive_flutter: any
+  http: any
 
 
 dev_dependencies:
