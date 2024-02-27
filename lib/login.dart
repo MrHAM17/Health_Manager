@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:health_manager/signup.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -63,7 +64,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         child:Column(
                           children: [
                             Text("Don't have an account?"),
-                            Align(alignment: Alignment.center,child: TextButton(onPressed: (){}, child:Text('Register here') )),
+                            Align(alignment: Alignment.center,child: TextButton(onPressed: (){
+                              Navigator.push( context, MaterialPageRoute(
+                                builder: (context) => SignUpPage(),
+                              ),
+                                  );
+
+                            }, child:Text('Register here') )),
 
 
                           ],

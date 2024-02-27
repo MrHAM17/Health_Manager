@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:health_manager/login.dart';
 
 class SignUpPage extends StatelessWidget {
   @override
@@ -107,13 +108,17 @@ class SignUpPage extends StatelessWidget {
                   onPressed: () {
                     // Handle sign up
                     // After successful sign up, navigate to UserDetailsPage
+
+
+
+
+
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0), // Best shape for the button
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 15.0), // Adjusted padding for better appearance
-                    primary: Colors.blue, // Button color set to blue
+                    ), backgroundColor: Colors.blue,
+                    padding: EdgeInsets.symmetric(vertical: 15.0), // Button color set to blue
                   ),
                   child: Text(
                     'Sign Up',
@@ -131,7 +136,13 @@ class SignUpPage extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     // Navigate to sign in page
-                  },
+                    Navigator.push( context, MaterialPageRoute(
+                      builder: (context) => LoginScreen(),
+                    ),
+                    );
+
+
+                    },
                   child: Text(
                     'Already have an account? Sign In',
                     style: TextStyle(
