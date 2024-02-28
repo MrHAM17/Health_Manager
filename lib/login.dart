@@ -31,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
       var userdata = await getUserData();
       box.put('name', userdata?['name']);
       box.put('mail', userdata?['mail']);
+      box.put('condition',userdata?['condition']);
       box.put('weight', userdata?['weight']);
       box.put('height', userdata?['height']);
     }else{
@@ -93,7 +94,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             )
                         ),
                       ),
-                      Align(alignment: Alignment.centerRight,child: TextButton(onPressed: (){}, child:Text('Forgot Password?') )),
                       ElevatedButton(onPressed: loginUser, child: Text('Login'),),
                       Align(
                         alignment: Alignment.center,

@@ -46,6 +46,7 @@ dependencies:
   hive_flutter: any
   http: any
   fl_chart: any
+  uuid: ^4.3.3
 
 
 dev_dependencies:

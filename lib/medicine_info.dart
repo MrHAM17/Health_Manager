@@ -194,16 +194,31 @@
 
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:health_manager/medicine_details.dart';
+import 'package:health_manager/medicine_reminder.dart';
 
-class MedicineInformation extends StatelessWidget {
+class MedicineInformation extends StatefulWidget {
+
+
+  @override
+  State<MedicineInformation> createState() => _MedicineInformationState();
+}
+
+class _MedicineInformationState extends State<MedicineInformation> {
+  List medicines = [];
+
+  @override
+  void initState() {
+    getmediData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Medicine Information'),
-      //   backgroundColor: Colors.lightBlue,
-      // ),
       body: Padding(
         padding: EdgeInsets.all(20.0),
         child: Column(
@@ -217,23 +232,14 @@ class MedicineInformation extends StatelessWidget {
             ),
             SizedBox(height: 20.0),
             Expanded(
-              child: ListView(
-                children: [
-                  _buildMedicineCard(
-                    'Paracetamol',
-                    'Used to relieve mild to moderate pain and to reduce fever.',
-                  ),
-                  SizedBox(height: 10.0),
-                  _buildMedicineCard(
-                    'Ibuprofen',
-                    'Used to relieve pain, swelling, and fever.',
-                  ),
-                  SizedBox(height: 10.0),
-                  _buildMedicineCard(
-                    'Aspirin',
-                    'Used to treat pain, fever, and inflammation.',
-                  ),
-                ],
+              child: RefreshIndicator(
+
+                onRefresh: getmediData,
+                child: ListView.builder(itemCount:medicines.length,itemBuilder: (context,index) {
+                  var days = medicines[index]['selectedDays'];
+                  var time = medicines[index]['selectedTimes'];
+                  return _buildMedicineCard(medicines[index]['name'],'Days: ${days.join('-')} , \n Time:${time.join('-')}',medicines[index]);
+                }),
               ),
             ),
           ],
@@ -241,16 +247,17 @@ class MedicineInformation extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Add functionality to add medicine information
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AddMedicineDetails()));
         },
         child: Icon(Icons.add),
         backgroundColor: Colors.lightBlue,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
+
   }
 
-  Widget _buildMedicineCard(String name, String description) {
+  Widget _buildMedicineCard(String name, String description,var data) {
     return Card(
       elevation: 2.0,
       child: ListTile(
@@ -261,9 +268,22 @@ class MedicineInformation extends StatelessWidget {
         ),
         subtitle: Text(description),
         onTap: () {
-          // Add navigation to medicine details page
+          Navigator.push(context, MaterialPageRoute(builder: (context) => MedicineDetails(medicineRecord: data)));
         },
       ),
     );
+  }
+
+  Future<void> getmediData() async {
+    setState(() {
+      medicines = [];
+    });
+    var data = await FirebaseFirestore.instance.collection('Users').doc(FirebaseAuth.instance.currentUser!.uid).collection('medicines').get();
+    data.docs.forEach((element) {
+      setState(() {
+        medicines.add(element.data());
+      });
+
+    });
   }
 }
