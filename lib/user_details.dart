@@ -629,13 +629,14 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
 
                                   });
                                 });
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> HomePage()));
                               }catch (e){
                                 snackbarKey.currentState?.showSnackBar(SnackBar(content: Text(e.toString())));
-
                             }
                               setState(() {
 
                               });
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> HomePage()));
                             }else{
                             }
                           },

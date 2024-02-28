@@ -86,45 +86,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
 
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 6.0, horizontal: 16),
-                child: Text(
-                  "Take a Wellness Quiz",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              Card(
-                margin: EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    ListTile(
-                      title: Text(
-                        'Take a Wellness Quiz',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text('Take a Small Quiz to let us know how you are feeling.'),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextButton(
-                          onPressed: () {
-                            // Action to perform when button is pressed
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => questions()));
-                          },
-                          child: Text('Take Quiz'),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+
             ],
           )),
           MedicineInformation(),
@@ -134,7 +96,6 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(
                   height: 10,
                 ),
-                const Text('USER NAME', style: TextStyle(fontSize: 22)),
                 Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
