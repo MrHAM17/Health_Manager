@@ -45,6 +45,7 @@ dependencies:
   hive: any
   hive_flutter: any
   http: any
+  fl_chart: any
 
 
 dev_dependencies:
