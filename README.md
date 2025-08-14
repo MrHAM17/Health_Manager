@@ -36,11 +36,8 @@ Our Disease Management App is designed to assist patients in effectively managin
 
 ## Support and Feedback
 
-If you encounter any issues with the app or have suggestions for improvement, please don't hesitate to reach out to our support team. We value your feedback and are committed to continuously enhancing the app to better serve your needs.
+If you encounter any issues with the app or have suggestions for improvement, please don't hesitate to reach out to our team. We value your feedback and are committed to continuously enhancing the app to better serve your needs.
 
-Contact Information:
-- Email: support@diseasemanagementapp.com
-- Phone: 1-800-555-1234
 
 ## Terms of Use and Privacy Policy
 
@@ -48,8 +45,6 @@ Before using the Disease Management App, please review our Terms of Use and Priv
 
 ## About Us
 
-The Disease Management App for Patients is developed by [Your Company Name], a leading provider of digital health solutions dedicated to empowering individuals to take control of their health and well-being.
-
-For more information about our company and other products/services, visit our website at www.yourcompany.com.
+The Disease Management App for Patients is digital health solution dedicated to empowering individuals to take control of their health and well-being.
 
 Thank you for choosing our Disease Management App! We're excited to be a part of your health journey.
