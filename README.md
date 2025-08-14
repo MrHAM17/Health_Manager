@@ -1,4 +1,4 @@
-# health_manager
+# Health_Manager
 
 # Disease Management App for Patients
 
